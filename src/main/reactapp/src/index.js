@@ -18,6 +18,10 @@ import Clock from './chapter4/Clock';
 // chapter5 실습
 import Commentlist from './chapter5/Commentlist';
 
+
+// chapter7 실습
+import Counter from './chapter7/Counter';
+import UseStateList from './chapter7/UseStateList';
 // ==========================================================================
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -33,7 +37,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 // }, 1000)
 
 root.render(
-  <Commentlist/>
+  <UseStateList/>
 )
 
 
