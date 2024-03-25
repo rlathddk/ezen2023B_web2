@@ -2,44 +2,38 @@ package ezenweb.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-@Entity // 해당 클래스와 연동DB내 테이블과 매핑/연결 ( ORM )
+@Entity
 @Table(name = "board")
-@Setter
-@NoArgsConstructor@AllArgsConstructor
-@Builder
-
+@AllArgsConstructor@NoArgsConstructor
+@Getter@Setter@Builder@ToString
 public class BoardEntity { // 테이블
-    @Id // PK
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int bno;        // 게시물번호 PK
-    private String btitle; // 게시물제목
-    @JoinColumn // fk
-    @ManyToOne // 다수가 하나에게  M:1
+    private int bno;
+    @Column(columnDefinition = "longtext")
+    private String bcontent;
+
+    @Column
+    @ColumnDefault("0")
+    private int bview;
+
+    // 단방향 FK필드
+    @JoinColumn(name="mno_fk") // fk필드명
+    @ManyToOne // 해당 필드 참조
     private MemberEntity memberEntity;
 
-//    @Column(columnDefinition = "longtext")
-//    private String btitle2;
-//
-//    @Column(columnDefinition = "date")
-//    private String btitle3;
-//
-//    private boolean 필드0;
-//
-//    private byte 필드1;
-//    private short 필드2;
-//    private long 필드3;
-//
-//    private char 필드4;
-//
-//    private float 필드6;
-//    private double 필드5;
-//
-//    private Date 필드7;
-//    private LocalDateTime 필드8;
+    // 양방향 : 게시물fk
+    @OneToMany(mappedBy = "boardEntity")
+    @ToString.Exclude
+    @Builder.Default
+    private List<ReplyEntity> replyEntityList = new ArrayList<>();
 }
 /*
     create table BoardEntitiy(
