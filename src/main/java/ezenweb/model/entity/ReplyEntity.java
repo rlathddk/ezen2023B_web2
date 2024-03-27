@@ -8,18 +8,19 @@ import lombok.*;
 @AllArgsConstructor @NoArgsConstructor
 @Getter @Setter @Builder @ToString
 public class ReplyEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id // PK
+    @GeneratedValue( strategy = GenerationType.IDENTITY) // AUTO_INCREMENT
     private int rno;
-    private String rcontent;
+    private String rcontent; // varchar(255)
 
-    // FK필드
-    @JoinColumn(name = "bno_fk")
+    // 단방향 : FK 필드
+    @JoinColumn( name = "bno_fk") // fk 필드명
     @ManyToOne // 해당 필드 참조
     private BoardEntity boardEntity;
 
-    // FK필드
-    @JoinColumn(name = "mno_fk")
+    // 단방향 : FK 필드
+    @JoinColumn( name = "mno_fk")
     @ManyToOne
     private MemberEntity memberEntity;
+
 }
