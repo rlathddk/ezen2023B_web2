@@ -22,5 +22,4 @@ public class ReplyEntity {
     @JoinColumn( name = "mno_fk")
     @ManyToOne
     private MemberEntity memberEntity;
-
 }
