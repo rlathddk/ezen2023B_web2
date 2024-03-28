@@ -20,12 +20,13 @@ export default function Login(props){
             })
             .catch((e)=>{console.log(e);})
     }
-    
+
     return(<>
         <form id="loginForm">
             이메일 : <input type="text" name="memail" />
             비밀번호 : <input type="password" name="mpassword" />
             <button type="button" onClick={onLogin}>로그인</button>
+           
         </form>
     </>)
 }

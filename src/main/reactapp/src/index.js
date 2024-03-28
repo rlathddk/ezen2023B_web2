@@ -42,6 +42,12 @@ import Route컴포넌트 from './chapter0/Route컴포넌트';
 
 import Index from './component/Index';
 
+import Calculator from './chapter12/Calculator';
+
+import ProfileCard from './chapter13/ProfileCard';
+
+
+
 const root = ReactDOM.createRoot(document.querySelector('#root'));
 root.render( 
     // <CommentList/> // <Counter />  // <UseStateList />  // <ConfirmButton />
