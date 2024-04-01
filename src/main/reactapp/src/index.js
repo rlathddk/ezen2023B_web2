@@ -45,6 +45,8 @@ import Index from './component/Index';
 import Calculator from './chapter12/Calculator';
 
 import ProfileCard from './chapter13/ProfileCard';
+import ContextApp from './chapter14/ContextApp';
+import DarkOrLight from './chapter15/DarkOrLight';
 
 
 

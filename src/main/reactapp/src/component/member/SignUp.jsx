@@ -33,7 +33,7 @@ export default function SignUp(props){
 
     return(<>
         <form>
-            이메일 : <input  type="text"    value={memail}  onChange={ onChangeMemail }/>  <br/>
+            이메일 : <input  type="text" value={memail}  onChange={ onChangeMemail }/>  <br/>
             패스워드 : <input type="password" value={ mpassword } onChange= { (e) => setMpassword( e.target.value ) } /> <br/>
             닉네임 : <input type="text" value={ mname } onChange= { (e) => setMname( e.target.value ) } /> <br/>
             <button type="button" onClick={ onSignup }>회원가입</button>

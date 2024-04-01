@@ -14,9 +14,11 @@ import java.util.List;
 public class BoardController {
     @Autowired private BoardService boardService;
     @PostMapping("/post.do")
-    public boolean postBoard(BoardDto boardDto){  return boardService.postBoard(boardDto); }
+    public boolean postBoard(BoardDto boardDto){
+        System.out.println("boardDto = " + boardDto);
+        return boardService.postBoard(boardDto); }
     @GetMapping("/get.do")
-    public List<Object> getBoard(){
+    public List<BoardDto> getBoard(){
         return boardService.getBoard();
     }
     @PutMapping("/put.do")
