@@ -4,8 +4,11 @@ import ezenweb.model.entity.BaseTime;
 import ezenweb.model.entity.BoardEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,6 +25,10 @@ public class BoardDto extends BaseTimeDto {
     private int mno_fk; // 회원 번호
     private String memail; // 회원 이메일
 
+    // 1. 출력용 게시물 이미지 필드(왜? 파일이름만 여러개 출력하면 되니깐 Spring --> js)
+    private List<String> bimglist = new ArrayList<>();
+    // 2. 등록용 게시물 이미지 필드 (왜 ?? -> js -- multipart)
+    private List<MultipartFile> uploadList = new ArrayList<>();
 
     // - 글쓰기
     public BoardEntity toEntity(){

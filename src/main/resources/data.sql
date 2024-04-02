@@ -27,3 +27,14 @@ insert
     ( '댓글4' , 2 , 1 ),
     ( '댓글5' , 3 , 4 ),
     ( '댓글5' , 1 , 5 );
+
+/* 3. 게시물사진 샘플 데이터 */
+insert
+    into boardimg( bimg , bno_fk )
+    values( 'img1.jpg' , 1 ),
+    ( 'img2.jpg' ,  1 ),
+    ( 'img3.jpg' ,  2 ),
+    ( 'img4.jpg' ,  3 ),
+    ( 'img5.jpg' ,  4 ),
+    ( 'img6.jpg' ,  5 ),
+    ( 'img7.jpg' ,  6 );

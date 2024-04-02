@@ -14,6 +14,7 @@ export default function BoardWrite(props){
         // 1. 전송할 폼 가져온다.
         const writeForm = document.querySelector('#writeForm')
         console.log(writeForm);
+
         // 2. 데이터폼으로 변환
         const writeFormData = new FormData(writeForm);
         console.log(writeFormData);
@@ -22,6 +23,7 @@ export default function BoardWrite(props){
             .then((r)=>{console.log(r);
                 if(r.data){
                     alert('글쓰기 등록완료');
+                    window.location.href="/board";
                    
                 }else{
                     alert('글쓰기 실패')
@@ -33,6 +35,7 @@ export default function BoardWrite(props){
     return(<>
         <form id="writeForm">
             내용 : <input type="text" name="bcontent" value={bcontent} onChange={onChangeBcontent}/>
+            <input type="file" name="uploadList" multiple accept="image/*" />
             <button type="button" onClick={onWrite} >등록</button>
         </form>
     </>)
