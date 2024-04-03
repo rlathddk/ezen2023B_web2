@@ -2,6 +2,7 @@ package ezenweb.service;
 
 import ezenweb.model.dto.BoardDto;
 import ezenweb.model.dto.MemberDto;
+import ezenweb.model.dto.PageDto;
 import ezenweb.model.entity.BoardEntity;
 import ezenweb.model.entity.BoardImgEntity;
 import ezenweb.model.entity.MemberEntity;
@@ -12,16 +13,16 @@ import ezenweb.model.repository.MemberEntityRepository;
 import ezenweb.model.repository.ReplyEntityRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -57,7 +58,10 @@ public class BoardService {
         // 첨부파일이 존재하면
         for(int i=0; i<boardDto.getUploadList().size(); i++){
             String file = fileService.fileUpload(boardDto.getUploadList().get(i));
-            fileEntityRepository.save(BoardImgEntity.builder().bimg(file).boardEntity(saverBoard).build());
+            fileEntityRepository.save(BoardImgEntity.builder()
+                    .bimg(file)
+                    .boardEntity(saverBoard)
+                    .build());
         }
 
         if(saverBoard.getBno() >= 1){
@@ -68,7 +72,9 @@ public class BoardService {
     }
     // 2. R
     @Transactional
-    public List<BoardDto> getBoard(){
+    public PageDto getBoard(int page, int view){
+        // 1. pageable 인터페이스 이용한 페이징처리
+        Pageable pageable = PageRequest.of(page-1, view);
 
         // 1. 리포지토리를 이용한 모든 엔티티( 테이블에 매핑 하기전 엔티티 )를 호출
         List<BoardEntity> result = boardEntityRepository.findAll();
@@ -97,10 +103,34 @@ public class BoardService {
 //        }
 //        return boardDtoList;
 
+
+
+
         // ========== 2번째 방법 ========== //
-        return boardEntityRepository.findAll().stream().map((boardEntity) -> {
+
+        // 1. 페이징처리된 엔티티 호출
+        Page<BoardEntity> boardEntityPage = boardEntityRepository.findAll(pageable);
+
+        // -- List 아닌 Page 타입일 때 List 동일한 메소드 사용하고 추가 기능
+            // 1. 전체 페이지 수
+        System.out.println("boardEntityPage() = " + boardEntityPage.getTotalPages());
+        int count = boardEntityPage.getTotalPages();
+            // 2. 전체 게시물 수
+        System.out.println("boardEntityPage.getTotalElements() = " + boardEntityPage.getTotalElements());
+
+
+        // 2. 엔티티를 Dto 변환
+        List<Object> data = boardEntityRepository.findAll(pageable).stream().map((boardEntity) -> {
             return boardEntity.toDto();
         }).collect(Collectors.toList());
+
+        // 2. 페이지DTO 반환 값 구성
+        PageDto pageDto = PageDto.builder()
+                .data(data)// 페이징 처리된 레코드들을 대입
+                .page(page) // 현재 페이지수
+                .count(count) // 전체 페이수
+                .build();
+        return pageDto;
     }
     // 3. U
     @Transactional
@@ -111,8 +141,19 @@ public class BoardService {
     }
     // 4. D
     @Transactional
-    public boolean deleteBoard(){
-        boardEntityRepository.deleteById( 1 );
+    public boolean deleteBoard(int bno){
+        // 1.회원번호 = 회원서비스에
+        MemberDto memberDto = memberService.doLoginInfo();
+        if(memberDto == null)return  false;
+        // 2. 내 게시물 확인
+        Optional<BoardEntity> optionalBoardEntity = boardEntityRepository.findById(bno);
+        System.out.println(optionalBoardEntity.get());
+        if(optionalBoardEntity.isPresent()){
+            if(
+            optionalBoardEntity.get().getMemberEntity().getMno() == memberDto.getMno()) {
+                boardEntityRepository.deleteById(bno); return true;
+                }
+            }
         return false;
     }
 }

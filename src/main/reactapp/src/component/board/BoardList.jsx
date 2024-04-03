@@ -1,30 +1,48 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import MediaCard from "./MediaCard"
+import Pagination from '@mui/material/Pagination';
 
 export default function BoardList(props){
 
     // 1. useState 변수 (담기)
-    const [boardlist, setBoardlist] = useState([])
+    const [pageDto, setPageDto] = useState({
+        page : 1, count : 0, data : []
+    });
+
 
     // 2. 
-    useEffect( ()=>{
-        axios.get('/board/get.do')
+    const getBoard = ()=>{
+        const info = {page : pageDto.page, view : 4}
+        axios.get('/board/get.do', {params : info })
         .then(r => {console.log(r);
-            setBoardlist(r.data)
+            // setBoardlist(r.data)
+            setPageDto(r.data);
         })
         .catch(e=>{console.log(e)})
-    } , [ ] )
+    }
+    // 2.
+    useEffect(getBoard,[pageDto.page])
+
+    const handleChange =(e, value) => {
+        pageDto.page = value
+        setPageDto({...pageDto});
+    };
 
     return(<>
-         <div style={{display:"flex"}}>
+         <div style={{display:"flex", flexWrap : "wrap"}}>
         {
-            boardlist.map((board)=>{
+            pageDto.data.map((board)=>{
                 return(
-                    <MediaCard board ={board}/>
+                    <MediaCard board ={board} getBoard={getBoard}/>
                 )
             })
         }
          </div>
+         <Pagination count={pageDto.count} page={pageDto.page} onChange={handleChange} />
     </>)
 }
+
+// count : the total number of pages                 총 페이지수
+// page : The current page.                          현재 페이지수
+// onChage : Callback fired when the pagei s changed
