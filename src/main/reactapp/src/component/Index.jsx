@@ -7,6 +7,7 @@ import Login from "./member/Login"
 import React, { useState } from "react";
 import BoardWrite from "./board/BoardWrite";
 import BoardList from "./board/BoardList";
+import Chatting from "./Chat/Chatting";
 
 
 // ================ 컨텍스트 만들기 ================ //
@@ -31,6 +32,7 @@ export default function Index(props){
                     <Route path="/member/login" element={<Login/>}/>
                     <Route path="/board/BoardWrite" element ={<BoardWrite/>} />
                     <Route path="/board/BoardList" element ={<BoardList/>} />
+                    <Route path="/chat/Chatting" element ={<Chatting/>} />
                 </Routes>
                 <Footer />
             </div>

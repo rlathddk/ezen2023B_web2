@@ -47,6 +47,7 @@ import Calculator from './chapter12/Calculator';
 import ProfileCard from './chapter13/ProfileCard';
 import ContextApp from './chapter14/ContextApp';
 import DarkOrLight from './chapter15/DarkOrLight';
+import Chatting from './component/Chat/Chatting';
 
 
 
@@ -54,7 +55,7 @@ const root = ReactDOM.createRoot(document.querySelector('#root'));
 root.render( 
     // <CommentList/> // <Counter />  // <UseStateList />  // <ConfirmButton />
     // <LandingPage />  // <Counter2 /> // <AttendenceBook />  // <NameForm />  // <SignUp />
-    <Index />
+    <Index/>
 );
 // !!!!!!!여기가 렌더링 되는 곳이에요
 // root.render( 
@@ -65,7 +66,7 @@ root.render(
 //     {/* <Library /> */}
 //     <Clock />
 //   </React.StrictMode>
-// );
+// ); 
 
 // 실습4 setInterval( 함수() , 밀리초 ) : 밀리초 마다 해당 함수 실행 
 // setInterval(() => {
