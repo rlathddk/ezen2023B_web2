@@ -14,6 +14,6 @@ import java.time.LocalDateTime;
 @ToString
 
 public class BaseTimeDto {
-    public LocalDateTime cdate; //
-    public LocalDateTime udate; //
+    public String cdate; //
+    public String udate; //
 }

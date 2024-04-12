@@ -31,7 +31,6 @@ public class BoardController {
         System.out.println("bno = " + bno);
         return boardService.deleteBoard(bno);
     }
-
 }
 
 
